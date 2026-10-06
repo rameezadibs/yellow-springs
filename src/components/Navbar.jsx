@@ -23,7 +23,7 @@ export default function Navbar({ onOpenPlanner }) {
     { label: 'ABOUT', href: '#about' },
     { label: 'SERVICES', href: '#services' },
     { label: 'OUR WORK', href: '#showcase' },
-    { label: 'APPROACH', href: '#approach' },
+    { label: 'BLOGS', href: '#blogs' },
     { label: 'RENTALS', href: '#rentals' },
     { label: 'CONTACT', href: '#contact' },
   ];

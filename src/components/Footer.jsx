@@ -12,8 +12,8 @@ export default function Footer({ onOpenPlanner }) {
     { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },
     { label: 'Our Work', href: '#showcase' },
+    { label: 'Blogs', href: '#blogs' },
     { label: 'Rentals', href: '#rentals' },
-    { label: 'Approach', href: '#approach' },
     { label: 'Contact', href: '#contact' },
   ];
 

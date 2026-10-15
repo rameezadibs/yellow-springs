@@ -1,7 +1,43 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const FOUNDERS_PHILOSOPHY = [
+  {
+    id: 'tasneem-murtaza',
+    name: 'Tasneem Murtaza',
+    role: 'Co-Founder · Creative Direction',
+    shortRole: 'Creative Direction',
+    quote: "“An event isn't an assembly of items—it is the memory people keep long after the music stops.”",
+    hasPhoto: true,
+    photo: '/about/team1.png',
+    initials: 'TM',
+  },
+  {
+    id: 'mariyam-murtaza',
+    name: 'Mariyam Murtaza',
+    role: 'Co-Founder · Technical & Production',
+    shortRole: 'Technical & Ops',
+    quote: "“Flawless execution is invisible. Guests simply feel the rhythm, without ever noticing the machinery making it happen.”",
+    hasPhoto: true,
+    photo: '/about/team2.png',
+    initials: 'MM',
+  },
+  {
+    id: 'tasneem',
+    name: 'Tasneem',
+    role: 'Co-Founder · Client Experience & Design',
+    shortRole: 'Client Experience',
+    quote: "“The best compliment we receive is when our hosts tell us they felt like honored guests at their own celebration.”",
+    hasPhoto: true,
+    photo: '/about/team3.png',
+    initials: 'T',
+  },
+];
 
 export default function BrandIntro() {
+  const [activeFounderIdx, setActiveFounderIdx] = useState(0);
+  const activeFounder = FOUNDERS_PHILOSOPHY[activeFounderIdx];
+
   return (
     <section
       id="about"
@@ -63,7 +99,7 @@ export default function BrandIntro() {
                 For more than 15 years, Yellow Springs has brought ideas, people, and places together through thoughtfully planned experiences across the UAE.
               </p>
               <p className="text-[#382B25]/75 text-sm sm:text-base leading-[1.8]">
-                From luxury milestone birthdays on private islands to high-level corporate symposia in Dubai and Abu Dhabi, our strength lies in owning the entire journey. We curate artists, engineer our own stages, deploy cutting-edge audio-visuals, and furnish environments with an artist's precision.
+                From luxury milestone birthdays on private islands to high-level corporate symposia in Dubai and Abu Dhabi, our strength lies in owning the entire journey. We curate artists, engineer our own stages, deploy cutting-edge audio-visuals, and furnish environments with an artist&apos;s precision.
               </p>
             </motion.div>
 
@@ -95,7 +131,7 @@ export default function BrandIntro() {
                   In-House Execution
                 </span>
                 <span className="text-xs text-[#382B25]/60 mt-1 leading-snug">
-                  Staging, sound, decor, & artists unified
+                  Staging, sound, decor, &amp; artists unified
                 </span>
               </div>
 
@@ -112,37 +148,114 @@ export default function BrandIntro() {
               </div>
             </motion.div>
 
-            {/* Founder Quote Card — Warm, Refined & Elegant */}
+            {/* Founder Quote Card — Featuring All 3 Co-Founders with Equal Prominence */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 p-6 sm:p-7 bg-[#ECE5D8]/70 border border-[#382B25]/15 flex flex-col sm:flex-row items-start sm:items-center gap-6 relative"
+              className="mt-8 p-6 sm:p-7 bg-[#ECE5D8]/70 border border-[#382B25]/15 flex flex-col gap-5 relative"
             >
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-[#382B25]/20 shadow-sm bg-[#382B25]/5">
-                <img
-                  src="/assets/founder.webp"
-                  alt="Tasneem Murtaza, Yellow Springs Founder"
-                  className="w-full h-full object-cover grayscale-[15%] hover:grayscale-0 transition-all duration-500"
-                />
+              {/* Header Label inside Card */}
+              <div className="flex items-center justify-between border-b border-[#382B25]/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#382B25]" />
+                  <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#382B25]/70 font-mono">
+                    CO-FOUNDERS // PHILOSOPHY
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono tracking-widest text-[#382B25]/50">
+                  0{activeFounderIdx + 1} / 03
+                </span>
               </div>
 
-              <div className="flex-1">
-                <p className="font-editorial italic text-lg sm:text-xl leading-relaxed text-[#382B25]">
-                  “An event isn't an assembly of items—it is the memory people keep long after the music stops.”
-                </p>
-                <div className="flex items-center gap-3 mt-3">
-                  <span className="w-6 h-[1px] bg-[#382B25]/30" />
-                  <p className="text-[11px] tracking-[0.2em] uppercase text-[#382B25]/75 font-semibold">
-                    Tasneem Murtaza — <span className="font-normal text-[#382B25]/60">Founder, Yellow Springs</span>
-                  </p>
+              {/* Dynamic Quote with smooth transition */}
+              <div className="min-h-[75px] sm:min-h-[65px] flex items-center">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={activeFounder.id}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="font-editorial italic text-lg sm:text-xl leading-relaxed text-[#382B25]"
+                  >
+                    {activeFounder.quote}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+
+              {/* Three Equal Co-Founders Selector Grid */}
+              <div className="pt-4 border-t border-[#382B25]/10">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  {FOUNDERS_PHILOSOPHY.map((founder, idx) => {
+                    const isSelected = activeFounderIdx === idx;
+                    return (
+                      <button
+                        key={founder.id}
+                        type="button"
+                        onClick={() => setActiveFounderIdx(idx)}
+                        className={`p-2.5 text-left transition-all duration-300 border flex items-center gap-2.5 cursor-pointer group ${
+                          isSelected
+                            ? 'bg-[#382B25] text-[#F5F0E6] border-[#382B25] shadow-sm'
+                            : 'bg-[#FAF7F0]/60 text-[#382B25] border-[#382B25]/15 hover:border-[#382B25]/40 hover:bg-[#FAF7F0]'
+                        }`}
+                      >
+                        {/* Circle Avatar */}
+                        <div
+                          className={`w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border flex items-center justify-center ${
+                            isSelected
+                              ? 'border-[#FFE600] ring-1 ring-[#FFE600]'
+                              : 'border-[#382B25]/20 group-hover:border-[#382B25]/50'
+                          }`}
+                        >
+                          {founder.hasPhoto ? (
+                            <img
+                              src={founder.photo}
+                              alt={founder.name}
+                              className="w-full h-full object-cover grayscale-[15%]"
+                            />
+                          ) : (
+                            <div
+                              className={`w-full h-full flex items-center justify-center font-mono text-[10px] font-bold ${
+                                isSelected
+                                  ? 'bg-[#251C17] text-[#FFE600]'
+                                  : 'bg-[#ECE5D8] text-[#382B25]'
+                              }`}
+                            >
+                              {founder.initials}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Name & Role */}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-semibold leading-tight truncate">
+                            {founder.name}
+                          </p>
+                          <p
+                            className={`text-[9px] uppercase tracking-wider mt-0.5 truncate ${
+                              isSelected ? 'text-[#F5F0E6]/75' : 'text-[#382B25]/60'
+                            }`}
+                          >
+                            {founder.shortRole}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Subtitle Attribution */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mt-3 px-1 text-[10px] text-[#382B25]/60 font-mono tracking-wider uppercase">
+                  <span>TASNEEM MURTAZA • MARIYAM MURTAZA • TASNEEM</span>
+                  <span className="opacity-70">CO-FOUNDERS · YELLOW SPRINGS</span>
                 </div>
               </div>
             </motion.div>
           </div>
 
-          {/* RIGHT COLUMN: Architectural Monograph Photography (Col 8-12) */}
+          {/* RIGHT COLUMN: The Co-Founders Philosophy Portrait (Col 8-12) */}
           <div className="lg:col-span-5 flex flex-col items-center lg:items-end">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -151,42 +264,52 @@ export default function BrandIntro() {
               transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative w-full max-w-md lg:max-w-none"
             >
-              {/* Primary Image: Grand Wedding / Ballroom Scene */}
-              <div className="relative aspect-[4/5] overflow-hidden border border-[#382B25]/20 shadow-xl bg-[#382B25]/10 group">
+              {/* Primary Image: The Three Co-Founders (from /home/philosophy.png) */}
+              <div className="relative aspect-square sm:aspect-[4/4.5] overflow-hidden border border-[#382B25]/20 shadow-xl bg-[#382B25]/10 group">
                 <img
-                  src="/assets/wedding2.webp"
-                  alt="Yellow Springs Luxury Event Scenography"
-                  className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                  src="/home/philosophy.png"
+                  alt="Yellow Springs Co-Founders — Tasneem Murtaza, Mariyam Murtaza, and Tasneem"
+                  className="w-full h-full object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
                 {/* Subtle Inner Frame */}
                 <div className="absolute inset-0 border border-white/10 pointer-events-none" />
                 
                 {/* Tag at Top Left of Image */}
-                <div className="absolute top-4 left-4 bg-[#F5F0E6]/90 backdrop-blur-sm px-3 py-1.5 border border-[#382B25]/15">
+                <div className="absolute top-4 left-4 bg-[#F5F0E6]/95 backdrop-blur-sm px-3 py-1.5 border border-[#382B25]/15 shadow-sm">
                   <span className="text-[9px] uppercase tracking-[0.25em] font-semibold text-[#382B25]">
-                    Scenography & Decor
+                    Co-Founders &amp; Leadership
                   </span>
+                </div>
+
+                {/* Subtle Bottom Vignette & Attribution Strip */}
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#251C17]/90 via-[#251C17]/50 to-transparent p-5 pt-14 text-[#F5F0E6]">
+                  <p className="text-[9px] uppercase font-mono tracking-[0.25em] text-[#FFE600] font-semibold mb-1">
+                    Directing Yellow Springs · Since 2011
+                  </p>
+                  <p className="font-editorial text-base sm:text-lg italic leading-tight text-[#FAF7F0]">
+                    Tasneem Murtaza, Mariyam Murtaza &amp; Tasneem
+                  </p>
                 </div>
               </div>
 
-              {/* Floating Detail Card: Champagne Toast */}
+              {/* Floating Detail Card: Bespoke Scenography Detail */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="hidden sm:flex absolute -bottom-6 -left-10 lg:-left-12 w-52 sm:w-60 bg-[#F5F0E6] p-3 border border-[#382B25]/20 shadow-2xl items-center gap-3.5 z-10"
+                className="hidden sm:flex absolute -bottom-6 -left-8 lg:-left-10 w-52 sm:w-60 bg-[#F5F0E6] p-3 border border-[#382B25]/20 shadow-2xl items-center gap-3.5 z-10"
               >
                 <div className="w-16 h-16 sm:w-20 sm:h-20 overflow-hidden flex-shrink-0 border border-[#382B25]/15">
                   <img
-                    src="/assets/hero-detail-champagne.jpg"
-                    alt="Bespoke glassware and candlelit dining"
+                    src="/assets/wedding2.webp"
+                    alt="Yellow Springs Luxury Event Scenography"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="flex-1 pr-1">
                   <span className="text-[8px] tracking-[0.25em] uppercase text-[#826958] font-bold block mb-1">
-                    Bespoke Detail
+                    Event Scenography
                   </span>
                   <p className="text-[11px] leading-tight text-[#382B25] font-editorial italic">
                     Atmosphere engineered with intention.
@@ -196,7 +319,7 @@ export default function BrandIntro() {
 
               {/* Subtle Archive Index Marker */}
               <div className="mt-6 hidden sm:flex items-center justify-between text-[10px] tracking-[0.2em] text-[#382B25]/50 uppercase font-mono w-full">
-                <span>ARCHIVE • VOL. 01</span>
+                <span>FOUNDING DIRECTORS • ARCHIVE</span>
                 <span>DUBAI • ABU DHABI</span>
               </div>
             </motion.div>

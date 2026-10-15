@@ -1,21 +1,69 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Phone, Mail, MapPin } from 'lucide-react';
 import { BRAND } from '../data/content';
 
+const CURRENT_YEAR = 2026;
+
 export default function Footer({ onOpenPlanner }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navLinks = [
-    { label: 'Home', href: '#' },
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Our Work', href: '#showcase' },
-    { label: 'Blogs', href: '#blogs' },
-    { label: 'Rentals', href: '#rentals' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', path: '/', hash: '' },
+    { label: 'About', path: '/about', hash: '' },
+    { label: 'Services', path: '/services', hash: '' },
+    { label: 'Our Work', path: '/', hash: '#showcase' },
+    { label: 'Blogs', path: '/', hash: '#blogs' },
+    { label: 'Rentals', path: '/', hash: '#rentals' },
+    { label: 'Contact', path: '/', hash: '#contact' },
   ];
+
+  const handleLinkClick = (e, link) => {
+    e.preventDefault();
+    if (link.path === '/about') {
+      if (location.pathname === '/about') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/about');
+      }
+      return;
+    }
+
+    if (link.path === '/services') {
+      if (location.pathname === '/services') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/services');
+      }
+      return;
+    }
+
+    if (link.path === '/') {
+      if (location.pathname === '/') {
+        if (!link.hash) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const el = document.querySelector(link.hash);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        navigate('/' + link.hash);
+        setTimeout(() => {
+          if (link.hash) {
+            const el = document.querySelector(link.hash);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 150);
+      }
+    }
+  };
 
   return (
     <footer className="relative bg-[#251C17] text-[#F5F0E6] pt-20 md:pt-28 pb-12 px-6 md:px-12 overflow-hidden">
@@ -39,7 +87,7 @@ export default function Footer({ onOpenPlanner }) {
 
               <button
                 onClick={onOpenPlanner}
-                className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#FFE600] hover:text-[#F5F0E6] transition-colors"
+                className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#FFE600] hover:text-[#F5F0E6] transition-colors cursor-pointer"
               >
                 <span>REQUEST BESPOKE EVENT PROPOSAL</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -89,8 +137,9 @@ export default function Footer({ onOpenPlanner }) {
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <a
-                    href={link.href}
-                    className="text-sm font-light text-[#F5F0E6]/80 hover:text-[#FFE600] transition-colors inline-block"
+                    href={link.path === '/about' ? '/about' : link.path === '/services' ? '/services' : link.hash || '/'}
+                    onClick={(e) => handleLinkClick(e, link)}
+                    className="text-sm font-light text-[#F5F0E6]/80 hover:text-[#FFE600] transition-colors inline-block cursor-pointer"
                   >
                     {link.label}
                   </a>
@@ -102,7 +151,7 @@ export default function Footer({ onOpenPlanner }) {
           {/* Contact Details (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
             <h4 className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#F5F0E6]/50 mb-6">
-              DUBAI STUDIO & ENQUIRIES
+              DUBAI STUDIO &amp; ENQUIRIES
             </h4>
 
             <div className="space-y-4 text-xs font-light text-[#F5F0E6]/80">
@@ -128,7 +177,7 @@ export default function Footer({ onOpenPlanner }) {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#FFE600] flex-shrink-0 mt-0.5" />
                 <span>
-                  Dubai Production Facility & Event Studio, United Arab Emirates
+                  Dubai Production Facility &amp; Event Studio, United Arab Emirates
                 </span>
               </div>
             </div>
@@ -154,12 +203,12 @@ export default function Footer({ onOpenPlanner }) {
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E6]/50 font-light border-t border-[#F5F0E6]/10 pt-8">
           <div>
-            © {new Date().getFullYear()} Yellow Springs Event Management UAE. All rights reserved.
+            © {CURRENT_YEAR} Yellow Springs Event Management UAE. All rights reserved.
           </div>
 
           <button
             onClick={scrollToTop}
-            className="hover:text-[#F5F0E6] transition-colors uppercase tracking-widest text-[10px]"
+            className="hover:text-[#F5F0E6] transition-colors uppercase tracking-widest text-[10px] cursor-pointer"
           >
             BACK TO TOP ↑
           </button>

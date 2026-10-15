@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import BrandIntro from './components/BrandIntro';
-import ExperienceShowcase from './components/ExperienceShowcase';
-import ServicesIndex from './components/ServicesIndex';
-import FeaturedExperience from './components/FeaturedExperience';
-import ApproachTimeline from './components/ApproachTimeline';
-import CredibilitySection from './components/CredibilitySection';
-import TestimonialsSection from './components/TestimonialsSection';
-import FinalCTASection from './components/FinalCTASection';
 import Footer from './components/Footer';
 import EventPlannerModal from './components/EventPlannerModal';
 import CaseStudyModal from './components/CaseStudyModal';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
 
 export default function App() {
   const [plannerOpen, setPlannerOpen] = useState(false);
   const [plannerInitialService, setPlannerInitialService] = useState('');
   const [caseStudyOpen, setCaseStudyOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpenPlanner = (service = '') => {
     setPlannerInitialService(typeof service === 'string' ? service : '');
     setPlannerOpen(true);
+  };
+
+  const handleNavigateHome = (hash = '') => {
+    navigate('/' + hash);
+    if (hash) {
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    }
   };
 
   return (
@@ -28,37 +34,56 @@ export default function App() {
       {/* Editorial Navigation */}
       <Navbar onOpenPlanner={() => handleOpenPlanner()} />
 
-      {/* Main Editorial Story Flow */}
-      <main>
-        {/* 01 — HERO / FIRST IMPRESSION */}
-        <Hero onOpenPlanner={() => handleOpenPlanner()} />
-
-        {/* 02 — INTRODUCTION / WHO YELLOW SPRINGS IS (PHILOSOPHY) */}
-        <BrandIntro />
-
-        {/* 03 — SERVICES / WHAT WE DO • CAPABILITIES */}
-        <ServicesIndex onOpenPlanner={(srv) => handleOpenPlanner(srv)} />
-
-        {/* 04 — FEATURED PROJECT / VISUAL STORY */}
-        <FeaturedExperience onOpenCaseStudy={() => setCaseStudyOpen(true)} />
-
-        {/* 05 — OUR APPROACH / METHODOLOGY • HOW WE CREATE */}
-        <ApproachTimeline />
-
-        {/* 06 — SELECTED EVENT EXPERIENCES */}
-        <ExperienceShowcase onOpenPlanner={() => handleOpenPlanner()} />
-
-        {/* 07 — EXPERIENCE / CREDIBILITY */}
-        <CredibilitySection />
-
-        {/* 09 — TESTIMONIALS */}
-        <TestimonialsSection />
-
-        {/* 10 — FINAL EVENT CTA */}
-        <FinalCTASection onOpenPlanner={() => handleOpenPlanner()} />
+      {/* Page Routing */}
+      <main id="main-content">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                onOpenPlanner={handleOpenPlanner}
+                onOpenCaseStudy={() => setCaseStudyOpen(true)}
+              />
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <AboutPage
+                onOpenPlanner={() => handleOpenPlanner()}
+                onNavigateHome={handleNavigateHome}
+              />
+            }
+          />
+          <Route
+            path="/services"
+            element={
+              <ServicesPage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
+          />
+          <Route
+            path="/birthday-packages"
+            element={<Navigate to="/" replace />}
+          />
+          <Route
+            path="/birthdays"
+            element={<Navigate to="/" replace />}
+          />
+          <Route
+            path="*"
+            element={
+              <HomePage
+                onOpenPlanner={handleOpenPlanner}
+                onOpenCaseStudy={() => setCaseStudyOpen(true)}
+              />
+            }
+          />
+        </Routes>
       </main>
 
-      {/* 11 — FOOTER */}
+      {/* Global Footer */}
       <Footer onOpenPlanner={() => handleOpenPlanner()} />
 
       {/* Interactive Modals */}

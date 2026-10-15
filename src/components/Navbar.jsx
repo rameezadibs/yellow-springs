@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight, Phone, Mail } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { BRAND } from '../data/content';
 
 export default function Navbar({ onOpenPlanner }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isAboutPage = location.pathname === '/about';
+  const isServicesPage = location.pathname === '/services';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,20 +26,52 @@ export default function Navbar({ onOpenPlanner }) {
   }, []);
 
   const navLinks = [
-    { label: 'ABOUT', href: '#about' },
-    { label: 'SERVICES', href: '#services' },
-    { label: 'OUR WORK', href: '#showcase' },
-    { label: 'BLOGS', href: '#blogs' },
-    { label: 'RENTALS', href: '#rentals' },
-    { label: 'CONTACT', href: '#contact' },
+    { label: 'ABOUT', path: '/about', hash: '#about-hero' },
+    { label: 'SERVICES', path: '/services', hash: '' },
+    { label: 'OUR WORK', path: '/', hash: '#showcase' },
+    { label: 'BLOGS', path: '/', hash: '#blogs' },
+    { label: 'RENTALS', path: '/', hash: '#rentals' },
+    { label: 'CONTACT', path: '/', hash: '#contact' },
   ];
 
-  const handleLinkClick = (e, href) => {
+  const handleNavClick = (e, link) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+
+    if (link.path === '/about') {
+      if (isAboutPage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/about');
+      }
+      return;
+    }
+
+    if (link.path === '/services') {
+      if (isServicesPage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/services');
+      }
+      return;
+    }
+
+    // Navigating to Home sections
+    if (!isAboutPage && !isServicesPage) {
+      const element = document.querySelector(link.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      navigate('/' + link.hash);
+      setTimeout(() => {
+        const element = document.querySelector(link.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
     }
   };
 
@@ -43,13 +81,18 @@ export default function Navbar({ onOpenPlanner }) {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
             ? 'bg-[#F5F0E6]/95 backdrop-blur-md py-3.5 border-b border-[#382B25]/10 shadow-[0_4px_24px_rgba(56,43,37,0.04)]'
+            : isAboutPage || isServicesPage
+            ? 'bg-[#F5F0E6]/80 backdrop-blur-sm py-5 md:py-6 border-b border-[#382B25]/10'
             : 'bg-transparent py-6 md:py-8'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
           {/* Logo */}
-          <a
-            href="#"
+          <Link
+            to="/"
+            onClick={() => {
+              if (!isAboutPage && !isServicesPage) window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             className="flex items-center group text-[#382B25]"
             aria-label="Yellow Springs Home"
           >
@@ -60,22 +103,31 @@ export default function Navbar({ onOpenPlanner }) {
                 className="w-full h-full object-contain"
               />
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isDarkBackgroundItem = !isScrolled && (link.label === 'ABOUT' || link.label === 'SERVICES');
+              const isDarkBackgroundItem =
+                !isScrolled && !isAboutPage && !isServicesPage && (link.label === 'ABOUT' || link.label === 'SERVICES');
+              const isActive =
+                (link.path === '/about' && isAboutPage) ||
+                (link.path === '/services' && isServicesPage);
+
               const textColorClass = isDarkBackgroundItem
                 ? 'text-[#F5F0E6] hover:text-[#FFE600] after:bg-[#F5F0E6]'
+                : isActive
+                ? 'text-[#382B25] font-bold after:w-full after:bg-[#382B25]'
                 : 'text-[#382B25]/85 hover:text-[#382B25] after:bg-[#382B25]';
 
               return (
                 <a
                   key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`text-xs tracking-widest font-semibold transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] hover:after:w-full after:transition-all after:duration-300 ${textColorClass}`}
+                  href={link.path === '/about' ? '/about' : link.path === '/services' ? '/services' : link.hash}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className={`text-xs tracking-widest font-semibold transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 ${
+                    isActive ? 'after:w-full' : 'after:w-0'
+                  } hover:after:w-full after:transition-all after:duration-300 ${textColorClass}`}
                 >
                   {link.label}
                 </a>
@@ -87,7 +139,7 @@ export default function Navbar({ onOpenPlanner }) {
           <div className="flex items-center gap-4">
             <button
               onClick={onOpenPlanner}
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-[#382B25] text-[#F5F0E6] text-xs tracking-widest font-medium rounded-none hover:bg-[#251C17] transition-all duration-300 group"
+              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-[#382B25] text-[#F5F0E6] text-xs tracking-widest font-medium rounded-none hover:bg-[#251C17] transition-all duration-300 group cursor-pointer"
             >
               <span>PLAN AN EVENT</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -96,7 +148,7 @@ export default function Navbar({ onOpenPlanner }) {
             {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-[#382B25] hover:opacity-80 transition-opacity"
+              className="lg:hidden p-2 text-[#382B25] hover:opacity-80 transition-opacity cursor-pointer"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-6 h-6 stroke-[1.5]" />
@@ -126,7 +178,7 @@ export default function Navbar({ onOpenPlanner }) {
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-full border border-[#F5F0E6]/20 hover:bg-[#F5F0E6]/10 transition-colors"
+                className="p-2.5 rounded-full border border-[#F5F0E6]/20 hover:bg-[#F5F0E6]/10 transition-colors cursor-pointer"
                 aria-label="Close Navigation Menu"
               >
                 <X className="w-5 h-5 text-[#F5F0E6]" />
@@ -138,20 +190,27 @@ export default function Navbar({ onOpenPlanner }) {
               <span className="text-[10px] tracking-widest text-[#F5F0E6]/40 uppercase font-semibold">
                 INDEX / EXPLORE
               </span>
-              {navLinks.map((link, idx) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 + 0.1, duration: 0.3 }}
-                  className="font-editorial text-3xl sm:text-4xl text-[#F5F0E6] hover:text-[#FFE600] transition-colors flex items-center justify-between group py-1"
-                >
-                  <span>{link.label}</span>
-                  <ArrowUpRight className="w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                </motion.a>
-              ))}
+              {navLinks.map((link, idx) => {
+                const isActive =
+                  (link.path === '/about' && isAboutPage) ||
+                  (link.path === '/services' && isServicesPage);
+                return (
+                  <motion.a
+                    key={link.label}
+                    href={link.path === '/about' ? '/about' : link.path === '/services' ? '/services' : link.hash}
+                    onClick={(e) => handleNavClick(e, link)}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 + 0.1, duration: 0.3 }}
+                    className={`font-editorial text-3xl sm:text-4xl hover:text-[#FFE600] transition-colors flex items-center justify-between group py-1 ${
+                      isActive ? 'text-[#FFE600]' : 'text-[#F5F0E6]'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    <ArrowUpRight className="w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                  </motion.a>
+                );
+              })}
             </div>
 
             {/* Bottom Contact inside Drawer */}
@@ -177,7 +236,7 @@ export default function Navbar({ onOpenPlanner }) {
                   setMobileMenuOpen(false);
                   onOpenPlanner();
                 }}
-                className="w-full sm:w-auto px-6 py-3.5 bg-[#F5F0E6] text-[#382B25] text-xs font-semibold tracking-widest uppercase hover:bg-[#FFE600] transition-colors"
+                className="w-full sm:w-auto px-6 py-3.5 bg-[#F5F0E6] text-[#382B25] text-xs font-semibold tracking-widest uppercase hover:bg-[#FFE600] transition-colors cursor-pointer"
               >
                 PLAN AN EVENT ↗
               </button>

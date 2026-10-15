@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Sparkles, Layers, Sliders, Music, Camera, ShieldCheck, Armchair } from 'lucide-react';
+import { ArrowUpRight, Award, Layers, Sliders, Music, Camera, ShieldCheck, Armchair } from 'lucide-react';
 import { SERVICES } from '../data/content';
 
 const CATEGORIES = [
@@ -191,7 +191,7 @@ export default function ServicesIndex({ onOpenPlanner }) {
           </div>
 
           <div className="flex items-center gap-3 justify-center sm:justify-start">
-            <Sparkles className="w-5 h-5 text-[#E2D6C5] shrink-0" />
+            <Award className="w-5 h-5 text-[#E2D6C5] shrink-0" />
             <div>
               <p className="text-[11px] font-semibold tracking-wider text-[#F5F0E6] uppercase">UAE Municipality Permits</p>
               <p className="text-[10px] text-[#F5F0E6]/60">100% compliant & accredited</p>

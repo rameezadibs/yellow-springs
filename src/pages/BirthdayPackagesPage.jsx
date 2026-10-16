@@ -4,26 +4,19 @@ import BirthdayPackageIntro from '../components/birthdays/BirthdayPackageIntro';
 import BirthdayPackageExplorer from '../components/birthdays/BirthdayPackageExplorer';
 import BirthdayCompareTable from '../components/birthdays/BirthdayCompareTable';
 import BirthdayAddOns from '../components/birthdays/BirthdayAddOns';
-import BirthdayPartyBuilder from '../components/birthdays/BirthdayPartyBuilder';
 import BirthdayVisualBreak from '../components/birthdays/BirthdayVisualBreak';
-import BirthdayWhyParents from '../components/birthdays/BirthdayWhyParents';
-import BirthdayFinalCTA from '../components/birthdays/BirthdayFinalCTA';
+import { SEO_DATA, buildServiceJsonLd } from '../data/seoData';
+import SEOHead from '../components/SEOHead';
+import ServiceSEOSection from '../components/services/ServiceSEOSection';
 
 export default function BirthdayPackagesPage({ onOpenPlanner }) {
   const [activePackageId, setActivePackageId] = useState('gold');
   const [selectedAddOns, setSelectedAddOns] = useState([]);
+  const seoData = SEO_DATA.birthdays;
+  const jsonLd = buildServiceJsonLd('birthdays');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-    document.title = "Birthday Party Packages — Big Smiles, Zero Boring Parties | Yellow Springs UAE";
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        'content',
-        "Explore Yellow Springs' all-inclusive children's birthday party packages across Dubai & UAE. From AED 1,500 with theme decor, entertainers, magic shows, bouncy castles, and 25+ bespoke add-ons."
-      );
-    }
   }, []);
 
   const handleScrollToSection = (elementId) => {
@@ -39,7 +32,9 @@ export default function BirthdayPackagesPage({ onOpenPlanner }) {
 
   const handleChoosePackage = (pkg) => {
     setActivePackageId(pkg.id);
-    handleScrollToSection('party-builder');
+    if (onOpenPlanner) {
+      onOpenPlanner(`Birthday Packages - ${pkg.name}`);
+    }
   };
 
   const handleToggleAddOn = (addonName) => {
@@ -53,10 +48,35 @@ export default function BirthdayPackagesPage({ onOpenPlanner }) {
   return (
     <div className="bg-[#F5F0E6] text-[#382B25] selection:bg-[#382B25] selection:text-[#F5F0E6] relative">
       
+      {/* Dynamic SEO Meta, Open Graph, Geo & Schema.org JSON-LD */}
+      <SEOHead
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        canonical={seoData.canonical}
+        ogImage={seoData.ogImage}
+        structuredData={jsonLd}
+      />
+      
+      {/* Top Breadcrumb Navigation */}
+      <div className="pt-28 sm:pt-32 px-6 sm:px-10 lg:px-14 bg-[#F5F0E6]">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between pb-4 border-b border-[#382B25]/15">
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-[#382B25]/60 hover:text-[#382B25] transition-colors"
+          >
+            <span>← HOME</span>
+          </a>
+          <span className="font-mono text-xs tracking-[0.25em] text-[#382B25]/40 uppercase">
+            CATEGORY 06 // 06 · BIRTHDAY PACKAGES
+          </span>
+        </div>
+      </div>
+
       {/* 01 — PAGE / SECTION HERO */}
       <BirthdayHero
         onExplorePackages={() => handleScrollToSection('packages-section')}
-        onBuildParty={() => handleScrollToSection('party-builder')}
+        onBuildParty={() => onOpenPlanner && onOpenPlanner('Birthday Packages')}
       />
 
       {/* 02 — PACKAGE INTRODUCTION */}
@@ -81,26 +101,18 @@ export default function BirthdayPackagesPage({ onOpenPlanner }) {
       <BirthdayAddOns
         selectedAddOns={selectedAddOns}
         onToggleAddOn={handleToggleAddOn}
-        onProceedToBuilder={() => handleScrollToSection('party-builder')}
+        onProceedToBuilder={() => onOpenPlanner && onOpenPlanner('Birthday Package Add-Ons')}
       />
 
-      {/* 07 — BUILD YOUR PARTY (4-Step Quotation Builder) */}
-      <BirthdayPartyBuilder
-        selectedPackageId={activePackageId}
-        onSelectPackage={handleSelectPackage}
-        selectedAddOns={selectedAddOns}
-        onToggleAddOn={handleToggleAddOn}
-      />
-
-      {/* 08 — VISUAL BREAK (Full-Width Candid Photography) */}
+      {/* 07 — VISUAL BREAK (Full-Width Candid Photography) */}
       <BirthdayVisualBreak />
 
-      {/* 09 — WHY PARENTS WILL LIKE THIS (Typographic 3-Point Promise) */}
-      <BirthdayWhyParents />
-
-      {/* 10 — FINAL CTA (Warm Ivory with Large Espresso Typography) */}
-      <BirthdayFinalCTA
-        onPlanParty={() => handleScrollToSection('party-builder')}
+      {/* 08 — SEO ARCHITECTURE: FAQS & VENUES (Credentials omitted as requested) */}
+      <ServiceSEOSection
+        serviceKey="birthdays"
+        seoData={seoData}
+        onOpenPlanner={onOpenPlanner}
+        showCredentials={false}
       />
 
     </div>

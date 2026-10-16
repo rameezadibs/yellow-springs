@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUpRight, Star } from 'lucide-react';
 
 export default function BirthdayHero({ onExplorePackages, onBuildParty }) {
   return (
-    <section className="relative pt-32 sm:pt-36 md:pt-44 pb-20 md:pb-28 px-6 md:px-12 bg-[#F5F0E6] text-[#382B25] overflow-hidden border-b border-[#382B25]/10">
+    <section className="relative pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 px-6 md:px-12 bg-[#F5F0E6] text-[#382B25] overflow-hidden border-b border-[#382B25]/10">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
@@ -35,6 +35,7 @@ export default function BirthdayHero({ onExplorePackages, onBuildParty }) {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-editorial text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal leading-[0.98] tracking-tight mb-8 text-[#382B25]"
             >
+              <span className="sr-only">Children's Birthday Party Packages &amp; Kids Entertainment Dubai UAE — </span>
               Big smiles.
               <br />
               <span className="italic font-normal">Zero boring</span> parties.
@@ -59,7 +60,7 @@ export default function BirthdayHero({ onExplorePackages, onBuildParty }) {
             >
               <button
                 onClick={onExplorePackages}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-[#382B25] text-[#F5F0E6] text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#251C17] transition-all group cursor-pointer"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-[#382B25] text-[#F5F0E6] text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#251C17] transition-all group cursor-pointer shadow-md"
               >
                 <span>EXPLORE PACKAGES</span>
                 <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-1" />
@@ -67,9 +68,9 @@ export default function BirthdayHero({ onExplorePackages, onBuildParty }) {
 
               <button
                 onClick={onBuildParty}
-                className="inline-flex items-center gap-2 px-6 py-4 border border-[#382B25]/25 text-[#382B25] text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#382B25]/5 hover:border-[#382B25] transition-all group cursor-pointer"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-[#382B25] text-[#F5F0E6] text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#251C17] transition-all group cursor-pointer shadow-md"
               >
-                <span>BUILD YOUR PARTY</span>
+                <span>PLAN YOUR PARTY</span>
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
             </motion.div>
@@ -103,7 +104,7 @@ export default function BirthdayHero({ onExplorePackages, onBuildParty }) {
               {/* Dominant Real Event Photo */}
               <div className="relative aspect-[4/5] overflow-hidden bg-[#382B25]/5 shadow-[0_12px_40px_rgba(56,43,37,0.08)] border border-[#382B25]/15">
                 <img
-                  src="/assets/birthday1.webp"
+                  src="/birthday/hero.png"
                   alt="Customized pastel balloon birthday stage and floral setup in UAE"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />

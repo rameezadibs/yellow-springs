@@ -11,7 +11,17 @@ export default function Navbar({ onOpenPlanner }) {
   const navigate = useNavigate();
 
   const isAboutPage = location.pathname === '/about';
-  const isServicesPage = location.pathname === '/services';
+  const isServicesActive = location.pathname.startsWith('/services');
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+
+  const serviceCategories = [
+    { label: 'ENGAGEMENTS & WEDDINGS', path: '/services/weddings', num: '01' },
+    { label: 'CORPORATE EVENTS', path: '/services/corporate', num: '02' },
+    { label: 'AV & SOUND RENTALS', path: '/services/av-sound', num: '03' },
+    { label: 'ARTIST MANAGEMENT', path: '/services/artists', num: '04' },
+    { label: 'LUXURY EVENT RENTALS', path: '/services/rentals', num: '05' },
+    { label: 'BIRTHDAY PARTY PACKAGES', path: '/services/birthdays', num: '06' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +47,7 @@ export default function Navbar({ onOpenPlanner }) {
   const handleNavClick = (e, link) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    setServicesDropdownOpen(false);
 
     if (link.path === '/about') {
       if (isAboutPage) {
@@ -48,7 +59,7 @@ export default function Navbar({ onOpenPlanner }) {
     }
 
     if (link.path === '/services') {
-      if (isServicesPage) {
+      if (location.pathname === '/services') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         navigate('/services');
@@ -81,7 +92,7 @@ export default function Navbar({ onOpenPlanner }) {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
             ? 'bg-[#F5F0E6]/95 backdrop-blur-md py-3.5 border-b border-[#382B25]/10 shadow-[0_4px_24px_rgba(56,43,37,0.04)]'
-            : isAboutPage || isServicesPage
+            : isAboutPage || isServicesActive
             ? 'bg-[#F5F0E6]/80 backdrop-blur-sm py-5 md:py-6 border-b border-[#382B25]/10'
             : 'bg-transparent py-6 md:py-8'
         }`}
@@ -91,7 +102,7 @@ export default function Navbar({ onOpenPlanner }) {
           <Link
             to="/"
             onClick={() => {
-              if (!isAboutPage && !isServicesPage) window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (!isAboutPage && !isServicesActive) window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="flex items-center group text-[#382B25]"
             aria-label="Yellow Springs Home"
@@ -109,10 +120,10 @@ export default function Navbar({ onOpenPlanner }) {
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
               const isDarkBackgroundItem =
-                !isScrolled && !isAboutPage && !isServicesPage && (link.label === 'ABOUT' || link.label === 'SERVICES');
+                !isScrolled && !isAboutPage && !isServicesActive && (link.label === 'ABOUT' || link.label === 'SERVICES');
               const isActive =
                 (link.path === '/about' && isAboutPage) ||
-                (link.path === '/services' && isServicesPage);
+                (link.path === '/services' && isServicesActive);
 
               const textColorClass = isDarkBackgroundItem
                 ? 'text-[#F5F0E6] hover:text-[#FFE600] after:bg-[#F5F0E6]'
@@ -120,10 +131,67 @@ export default function Navbar({ onOpenPlanner }) {
                 ? 'text-[#382B25] font-bold after:w-full after:bg-[#382B25]'
                 : 'text-[#382B25]/85 hover:text-[#382B25] after:bg-[#382B25]';
 
+              if (link.label === 'SERVICES') {
+                return (
+                  <div
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => setServicesDropdownOpen(true)}
+                    onMouseLeave={() => setServicesDropdownOpen(false)}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setServicesDropdownOpen((prev) => !prev)}
+                      className={`text-xs tracking-widest font-semibold transition-colors relative py-1 inline-flex items-center gap-1.5 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 ${
+                        isActive ? 'after:w-full' : 'after:w-0'
+                      } hover:after:w-full after:transition-all after:duration-300 ${textColorClass}`}
+                      aria-haspopup="true"
+                      aria-expanded={servicesDropdownOpen}
+                    >
+                      <span>{link.label}</span>
+                      <span className={`text-[9px] transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180' : ''}`}>▾</span>
+                    </button>
+
+                    <AnimatePresence>
+                      {servicesDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.18 }}
+                          className="absolute top-full -left-6 w-80 bg-[#382B25] text-[#F5F0E6] border border-[#F5F0E6]/15 shadow-2xl p-3 z-50 mt-1"
+                        >
+                          <div className="text-[9px] font-mono tracking-[0.25em] text-[#F5F0E6]/50 uppercase px-3 py-1.5 border-b border-[#F5F0E6]/10 mb-1 flex items-center justify-between">
+                            <span>SELECT A SERVICE</span>
+                            <span className="text-[#FFE600]">6 CATEGORIES</span>
+                          </div>
+                          {serviceCategories.map((item) => (
+                            <Link
+                              key={item.num}
+                              to={item.path}
+                              onClick={() => setServicesDropdownOpen(false)}
+                              className="group flex items-center justify-between px-3 py-2 hover:bg-[#251C17] transition-colors"
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <span className="font-mono text-[10px] text-[#FFE600]">{item.num}</span>
+                                <span className="font-mono text-[11px] tracking-wider uppercase text-[#F5F0E6] group-hover:text-[#FFE600] transition-colors">
+                                  {item.label}
+                                </span>
+                              </div>
+                              <ArrowUpRight className="w-3.5 h-3.5 text-[#F5F0E6]/40 group-hover:text-[#FFE600] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
               return (
                 <a
                   key={link.label}
-                  href={link.path === '/about' ? '/about' : link.path === '/services' ? '/services' : link.hash}
+                  href={link.path === '/about' ? '/about' : link.hash}
                   onClick={(e) => handleNavClick(e, link)}
                   className={`text-xs tracking-widest font-semibold transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 ${
                     isActive ? 'after:w-full' : 'after:w-0'
@@ -193,7 +261,45 @@ export default function Navbar({ onOpenPlanner }) {
               {navLinks.map((link, idx) => {
                 const isActive =
                   (link.path === '/about' && isAboutPage) ||
-                  (link.path === '/services' && isServicesPage);
+                  (link.path === '/services' && isServicesActive);
+
+                if (link.label === 'SERVICES') {
+                  return (
+                    <div key={link.label} className="border-y border-[#F5F0E6]/10 py-3 my-1">
+                      <div className="flex items-center justify-between py-1">
+                        <span
+                          className={`font-editorial text-3xl sm:text-4xl ${
+                            isActive ? 'text-[#FFE600]' : 'text-[#F5F0E6]'
+                          }`}
+                        >
+                          SERVICES
+                        </span>
+                        <span className="font-mono text-[10px] text-[#FFE600] tracking-widest uppercase">
+                          CHOOSE CATEGORY
+                        </span>
+                      </div>
+
+                      {/* Mobile Sub-categories Grid */}
+                      <div className="grid grid-cols-1 gap-2.5 mt-3 pl-2">
+                        {serviceCategories.map((sub) => (
+                          <Link
+                            key={sub.num}
+                            to={sub.path}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center justify-between py-1.5 text-xs font-mono tracking-wider text-[#F5F0E6]/85 hover:text-[#FFE600]"
+                          >
+                            <span className="flex items-center gap-2.5">
+                              <span className="text-[#FFE600] font-bold">{sub.num}</span>
+                              <span>{sub.label}</span>
+                            </span>
+                            <ArrowUpRight className="w-3.5 h-3.5 text-[#F5F0E6]/40" />
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+
                 return (
                   <motion.a
                     key={link.label}

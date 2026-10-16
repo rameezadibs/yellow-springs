@@ -7,11 +7,11 @@ export default function BirthdayPackageExplorer({ activePackageId, onSelectPacka
   const currentPackage = BIRTHDAY_PACKAGES.find((p) => p.id === activePackageId) || BIRTHDAY_PACKAGES[2]; // Default Gold
 
   return (
-    <section className="py-16 md:py-24 px-6 md:px-12 bg-[#F5F0E6] text-[#382B25] border-b border-[#382B25]/10">
+    <section className="pt-6 sm:pt-8 pb-8 sm:pb-10 px-6 md:px-12 bg-[#F5F0E6] text-[#382B25] border-b border-[#382B25]/10">
       <div className="max-w-7xl mx-auto">
         
         {/* Subtle Horizontal Progression Indicator */}
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-10">
           <div className="flex items-center justify-between mb-4">
             <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#382B25]/60">
               PACKAGE PROGRESSION

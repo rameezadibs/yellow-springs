@@ -16,7 +16,6 @@ export default function Footer({ onOpenPlanner }) {
   const navLinks = [
     { label: 'Home', path: '/', hash: '' },
     { label: 'About', path: '/about', hash: '' },
-    { label: 'Services', path: '/services', hash: '' },
     { label: 'Our Work', path: '/', hash: '#showcase' },
     { label: 'Blogs', path: '/', hash: '#blogs' },
     { label: 'Rentals', path: '/', hash: '#rentals' },
@@ -128,8 +127,8 @@ export default function Footer({ onOpenPlanner }) {
             </div>
           </div>
 
-          {/* Navigation Links (3 cols) */}
-          <div className="lg:col-span-3">
+          {/* Navigation Links (2 cols) */}
+          <div className="lg:col-span-2">
             <h4 className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#F5F0E6]/50 mb-6">
               NAVIGATION
             </h4>
@@ -148,8 +147,47 @@ export default function Footer({ onOpenPlanner }) {
             </ul>
           </div>
 
-          {/* Contact Details (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
+          {/* Service Worlds (2 cols) */}
+          <div className="lg:col-span-2">
+            <h4 className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#F5F0E6]/50 mb-6">
+              SERVICES
+            </h4>
+            <ul className="space-y-2.5 text-xs font-light text-[#F5F0E6]/80">
+              <li>
+                <a href="/services/weddings" className="hover:text-[#FFE600] transition-colors block">
+                  Weddings &amp; Engagements
+                </a>
+              </li>
+              <li>
+                <a href="/services/corporate" className="hover:text-[#FFE600] transition-colors block">
+                  Corporate Events &amp; Galas
+                </a>
+              </li>
+              <li>
+                <a href="/services/av-sound" className="hover:text-[#FFE600] transition-colors block">
+                  AV &amp; Sound Rentals
+                </a>
+              </li>
+              <li>
+                <a href="/services/artists" className="hover:text-[#FFE600] transition-colors block">
+                  Artist Management
+                </a>
+              </li>
+              <li>
+                <a href="/services/rentals" className="hover:text-[#FFE600] transition-colors block">
+                  Event Rentals &amp; Staging
+                </a>
+              </li>
+              <li>
+                <a href="/services/birthdays" className="text-[#FFE600] hover:underline transition-colors block font-medium">
+                  Birthday Packages (5 Tiers)
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Details (3 cols) */}
+          <div className="lg:col-span-3 space-y-6">
             <h4 className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#F5F0E6]/50 mb-6">
               DUBAI STUDIO &amp; ENQUIRIES
             </h4>

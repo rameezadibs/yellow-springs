@@ -84,23 +84,27 @@ export default function ServicesIntro() {
             INDEX // JUMP DIRECTLY TO CAPABILITY
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
             {intro.indexItems.map((item) => (
-              <button
+              <a
                 key={item.num}
-                type="button"
-                onClick={() => handleScrollToService(item.targetId)}
-                className="group p-4 sm:p-5 border border-[#F5F0E6]/15 hover:border-[#FFE600] bg-[#251C17]/40 hover:bg-[#251C17]/80 transition-all duration-300 text-left flex flex-col justify-between cursor-pointer"
+                href={item.path}
+                className="group p-4 sm:p-5 border border-[#F5F0E6]/15 hover:border-[#FFE600] bg-[#251C17]/40 hover:bg-[#251C17]/90 transition-all duration-300 text-left flex flex-col justify-between cursor-pointer"
               >
                 <div className="flex items-center justify-between text-[#F5F0E6]/50 group-hover:text-[#FFE600] transition-colors mb-3">
                   <span className="font-mono text-xs font-semibold">{item.num}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
 
-                <span className="font-mono text-xs sm:text-sm tracking-wider uppercase text-[#F5F0E6] group-hover:text-[#FFE600] transition-colors">
-                  {item.label}
-                </span>
-              </button>
+                <div>
+                  <span className="font-mono text-xs tracking-wider uppercase text-[#F5F0E6] group-hover:text-[#FFE600] transition-colors block leading-tight">
+                    {item.label}
+                  </span>
+                  <span className="text-[9px] font-mono text-[#F5F0E6]/40 uppercase tracking-widest mt-2 block group-hover:text-[#F5F0E6]/70">
+                    VIEW DETAILS →
+                  </span>
+                </div>
+              </a>
             ))}
           </div>
 
@@ -109,13 +113,12 @@ export default function ServicesIntro() {
             <span className="font-light">
               Planning a children&apos;s celebration or milestone party?
             </span>
-            <button
-              type="button"
-              onClick={() => handleScrollToService('birthday-packages')}
+            <a
+              href="/services/birthdays"
               className="text-[#FFE600] font-semibold tracking-wider uppercase hover:text-[#F5F0E6] transition-colors cursor-pointer inline-flex items-center gap-1.5 self-start sm:self-auto"
             >
-              <span>EXPLORE BIRTHDAY PACKAGES (FROM AED 1,500) ↓</span>
-            </button>
+              <span>EXPLORE BIRTHDAY PACKAGES (FROM AED 1,500) →</span>
+            </a>
           </div>
         </motion.div>
 

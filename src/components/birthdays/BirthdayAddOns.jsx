@@ -14,11 +14,11 @@ export default function BirthdayAddOns({ selectedAddOns = [], onToggleAddOn, onP
   const totalSelected = selectedAddOns.length;
 
   return (
-    <section className="py-20 md:py-28 px-6 md:px-12 bg-[#382B25] text-[#F5F0E6] border-b border-[#F5F0E6]/10">
+    <section className="pt-8 sm:pt-10 pb-6 sm:pb-8 px-6 md:px-12 bg-[#382B25] text-[#F5F0E6] border-b border-[#F5F0E6]/10">
       <div className="max-w-7xl mx-auto">
         
         {/* Top Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-14 md:mb-18 pb-10 border-b border-[#F5F0E6]/15">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end mb-8 sm:mb-10 pb-6 border-b border-[#F5F0E6]/15">
           <div className="lg:col-span-8">
             <div className="flex items-center gap-2 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FFE600]" />
@@ -162,16 +162,16 @@ export default function BirthdayAddOns({ selectedAddOns = [], onToggleAddOn, onP
           })}
         </div>
 
-        {/* Bottom Banner Linking to Builder */}
-        <div className="mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-6 border-t border-[#F5F0E6]/10 text-xs text-[#F5F0E6]/70">
+        {/* Bottom Banner Linking to Enquiry */}
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 sm:pt-5 border-t border-[#F5F0E6]/10 text-xs text-[#F5F0E6]/70">
           <div>
             Have a custom requirement not listed here? We build custom themes, stages, and installations.
           </div>
           <button
             onClick={onProceedToBuilder}
-            className="inline-flex items-center gap-2 text-[#FFE600] uppercase tracking-widest font-semibold hover:text-[#F5F0E6] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 text-[#FFE600] uppercase tracking-widest font-semibold hover:text-[#F5F0E6] transition-colors cursor-pointer shrink-0"
           >
-            <span>PROCEED TO PARTY BUILDER</span>
+            <span>CONSULT AN EVENT PRODUCER</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

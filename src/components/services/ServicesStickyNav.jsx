@@ -6,11 +6,12 @@ export default function ServicesStickyNav() {
   const [isVisible, setIsVisible] = useState(false);
 
   const navItems = [
-    { id: 'weddings', num: '01', label: 'WEDDINGS' },
-    { id: 'corporate', num: '02', label: 'CORPORATE' },
-    { id: 'av-sound', num: '03', label: 'AV + SOUND' },
-    { id: 'artists', num: '04', label: 'ARTISTS' },
-    { id: 'rentals', num: '05', label: 'RENTALS' },
+    { id: 'weddings', num: '01', label: 'WEDDINGS', path: '/services/weddings' },
+    { id: 'corporate', num: '02', label: 'CORPORATE', path: '/services/corporate' },
+    { id: 'av-sound', num: '03', label: 'AV + SOUND', path: '/services/av-sound' },
+    { id: 'artists', num: '04', label: 'ARTISTS', path: '/services/artists' },
+    { id: 'rentals', num: '05', label: 'RENTALS', path: '/services/rentals' },
+    { id: 'birthday-packages', num: '06', label: 'BIRTHDAYS', path: '/services/birthdays' },
   ];
 
   useEffect(() => {

@@ -10,7 +10,7 @@ export const BIRTHDAY_PACKAGES = [
     priceFormatted: 'AED 1,500',
     descriptor: 'THE ESSENTIALS',
     tagline: 'A focused, beautifully styled start for intimate home and venue celebrations.',
-    image: '/assets/birthday1.webp',
+    image: '/birthday/hero.png',
     imageAlt: 'Pastel themed balloon backdrop and custom dessert display',
     progressionLevel: 20,
     inclusions: [

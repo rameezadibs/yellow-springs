@@ -62,11 +62,12 @@ export const SERVICES_DATA = {
     supportingCopy:
       "Yellow Springs brings creative planning, technical expertise, entertainment and event essentials together to create experiences that feel seamless from beginning to end.",
     indexItems: [
-      { num: "01", label: "ENGAGEMENTS & WEDDINGS", targetId: "weddings" },
-      { num: "02", label: "CORPORATE EVENTS", targetId: "corporate" },
-      { num: "03", label: "AV & SOUND EQUIPMENT", targetId: "av-sound" },
-      { num: "04", label: "ARTIST MANAGEMENT", targetId: "artists" },
-      { num: "05", label: "RENTALS & ASSETS", targetId: "rentals" },
+      { num: "01", label: "ENGAGEMENTS & WEDDINGS", targetId: "weddings", path: "/services/weddings" },
+      { num: "02", label: "CORPORATE EVENTS", targetId: "corporate", path: "/services/corporate" },
+      { num: "03", label: "AV & SOUND EQUIPMENT", targetId: "av-sound", path: "/services/av-sound" },
+      { num: "04", label: "ARTIST MANAGEMENT", targetId: "artists", path: "/services/artists" },
+      { num: "05", label: "RENTALS & ASSETS", targetId: "rentals", path: "/services/rentals" },
+      { num: "06", label: "BIRTHDAY PACKAGES", targetId: "birthday-packages", path: "/services/birthdays" },
     ],
   },
 
@@ -88,19 +89,19 @@ export const SERVICES_DATA = {
     ctaText: "DISCOVER WEDDINGS ↗",
     images: {
       primary: {
-        src: "/assets/wedding1.webp",
-        alt: "Couple and guests candidly celebrating at bespoke UAE wedding",
-        caption: "CEREMONY SCENOGRAPHY · DUBAI",
+        src: "/weddings/hero.png",
+        alt: "Luxury wedding ceremony setup and bespoke scenography by Yellow Springs",
+        caption: "CEREMONY SCENOGRAPHY · DUBAI & UAE",
       },
       detail1: {
-        src: "/assets/engagement.webp",
-        alt: "Tactile artisanal floral tablescape and ambient candles",
-        caption: "DETAIL // 01 · FLORAL ARCHITECTURE",
+        src: "/weddings/1.png",
+        alt: "Couture wedding styling and floral design detail",
+        caption: "DETAIL // 01 · BESPOKE WEDDING AESTHETICS",
       },
       detail2: {
-        src: "/assets/hero-detail-champagne.jpg",
-        alt: "Intimate champagne table setting and bespoke glassware",
-        caption: "DETAIL // 02 · GUEST TOUCHPOINTS",
+        src: "/weddings/2.png",
+        alt: "Atmospheric wedding celebration and dining scenography",
+        caption: "DETAIL // 02 · GUEST EXPERIENCE & CELEBRATION",
       },
     },
   },
@@ -122,9 +123,21 @@ export const SERVICES_DATA = {
     ],
     ctaText: "EXPLORE CORPORATE EVENTS ↗",
     image: {
-      src: "/assets/corporate.webp",
-      alt: "Panoramic curved LED stage and corporate summit amphitheater in Dubai",
+      src: "/events/hero.png",
+      alt: "Panoramic bespoke staging, LED architecture and corporate summit production in UAE",
       caption: "PANORAMIC BESPOKE STAGING & KEYNOTE PRODUCTION · UAE",
+    },
+    images: {
+      detail1: {
+        src: "/events/1.png",
+        alt: "Luxury corporate gala banquet scenography and keynote lighting",
+        caption: "DETAIL // 01 · GALA & KEYNOTE SCENOGRAPHY",
+      },
+      detail2: {
+        src: "/events/2.png",
+        alt: "Architectural stage fabrication and conference summit production",
+        caption: "DETAIL // 02 · ARCHITECTURAL STAGE FABRICATION",
+      },
     },
   },
 
@@ -145,9 +158,21 @@ export const SERVICES_DATA = {
     ],
     ctaText: "EXPLORE AV & SOUND ↗",
     image: {
-      src: "/assets/audio.webp",
+      src: "/AV/hero.png",
       alt: "Professional digital sound mixing console and concert line array equipment",
       caption: "DIRECT IN-HOUSE TECHNICAL RIGGING FLEET · DUBAI",
+    },
+    images: {
+      detail1: {
+        src: "/AV/1.png",
+        alt: "Concert stage dynamic kinetic moving lights and atmospheric beam programming",
+        caption: "DETAIL // 01 · INTELLIGENT LIGHTING RIGS",
+      },
+      detail2: {
+        src: "/AV/2.png",
+        alt: "Pioneer Pro DJ consoles and live electronic sound mixing workstation",
+        caption: "DETAIL // 02 · HIGH-FIDELITY AUDIO CONSOLES",
+      },
     },
   },
 
@@ -168,9 +193,21 @@ export const SERVICES_DATA = {
     ],
     ctaText: "EXPLORE ARTISTS ↗",
     image: {
-      src: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
-      alt: "Live concert performance artist under dramatic golden stage spotlights",
+      src: "/artist/hero.png",
+      alt: "Live concert performance artist and entertainment roster in UAE",
       caption: "CURATED ARTISTIC ENERGY · UAE ENTERTAINMENT ROSTER",
+    },
+    images: {
+      detail1: {
+        src: "/artist/1.png",
+        alt: "Virtuoso instrumentalist and live musical performer",
+        caption: "DETAIL // 01 · VIRTUOSO INSTRUMENTALISTS",
+      },
+      detail2: {
+        src: "/artist/2.png",
+        alt: "Theatrical live stage performers and visual roaming acts",
+        caption: "DETAIL // 02 · IMMERSIVE ROAMING & STAGE ACTS",
+      },
     },
   },
 
@@ -182,6 +219,23 @@ export const SERVICES_DATA = {
     supportingCopy:
       "From furniture and entertainment to event essentials, our rental collection helps bring every part of the occasion together.",
     ctaText: "EXPLORE ALL RENTALS ↗",
+    image: {
+      src: "/rentals/hero.png",
+      alt: "Luxury event furniture and warehouse rental assets by Yellow Springs UAE",
+      caption: "WAREHOUSE ASSETS & LUXURY RENTALS · DUBAI & UAE",
+    },
+    images: {
+      detail1: {
+        src: "/rentals/1.png",
+        alt: "Luxury lounge seating and bespoke event styling rentals",
+        caption: "DETAIL // 01 · LUXURY EVENT RENTALS",
+      },
+      detail2: {
+        src: "/rentals/2.png",
+        alt: "Designer event furniture and celebratory staging equipment",
+        caption: "DETAIL // 02 · AMBIENT EVENT FURNISHING",
+      },
+    },
     categories: [
       {
         id: "furniture",

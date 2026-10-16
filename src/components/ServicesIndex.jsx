@@ -14,6 +14,16 @@ export default function ServicesIndex({ onOpenPlanner }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [hoveredService, setHoveredService] = useState(null);
 
+  const getServiceRoute = (service) => {
+    if (service.num === '01') return '/services/corporate';
+    if (service.num === '02') return '/services/weddings';
+    if (service.num === '03') return '/services/birthdays';
+    if (service.num === '04') return '/services/rentals';
+    if (service.num === '05') return '/services/artists';
+    if (service.num === '07') return '/services/av-sound';
+    return '/services';
+  };
+
   // Filter services based on category
   const filteredServices = SERVICES.filter((service) => {
     if (selectedCategory === 'all') return true;
@@ -156,12 +166,18 @@ export default function ServicesIndex({ onOpenPlanner }) {
 
                     {/* Action Bar */}
                     <div className="pt-4 border-t border-[#F5F0E6]/15 flex items-center justify-between">
-                      <span className="text-[10px] tracking-[0.2em] uppercase font-semibold text-[#E2D6C5] group-hover:text-[#F5F0E6] transition-colors">
-                        EXPLORE SERVICE & ENQUIRE
+                      <span className="text-[10px] tracking-[0.2em] uppercase font-semibold text-[#E2D6C5] group-hover:text-[#FFE600] transition-colors flex items-center gap-2">
+                        <span>EXPLORE SERVICE</span>
+                        <span className="text-[9px] opacity-70">→</span>
                       </span>
-                      <div className="w-8 h-8 rounded-full border border-[#F5F0E6]/30 flex items-center justify-center group-hover:bg-[#F5F0E6] group-hover:text-[#382B25] transition-all duration-300">
-                        <ArrowUpRight className="w-4 h-4" />
-                      </div>
+                      <a
+                        href={getServiceRoute(service)}
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-3 py-1 bg-[#F5F0E6]/10 hover:bg-[#FFE600] hover:text-[#382B25] text-[#F5F0E6] text-[9px] font-mono tracking-widest uppercase transition-all duration-300 inline-flex items-center gap-1.5"
+                      >
+                        <span>VIEW PAGE</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
                     </div>
                   </div>
                 </motion.div>

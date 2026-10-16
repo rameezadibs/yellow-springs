@@ -7,6 +7,12 @@ import CaseStudyModal from './components/CaseStudyModal';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
+import BirthdayPackagesPage from './pages/BirthdayPackagesPage';
+import WeddingServicePage from './pages/services/WeddingServicePage';
+import CorporateServicePage from './pages/services/CorporateServicePage';
+import AVServicePage from './pages/services/AVServicePage';
+import ArtistsServicePage from './pages/services/ArtistsServicePage';
+import RentalsServicePage from './pages/services/RentalsServicePage';
 
 export default function App() {
   const [plannerOpen, setPlannerOpen] = useState(false);
@@ -57,19 +63,63 @@ export default function App() {
           />
           <Route
             path="/services"
+            element={<Navigate to="/services/weddings" replace />}
+          />
+          <Route
+            path="/services/weddings"
             element={
-              <ServicesPage
+              <WeddingServicePage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
+          />
+          <Route
+            path="/services/corporate"
+            element={
+              <CorporateServicePage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
+          />
+          <Route
+            path="/services/av-sound"
+            element={
+              <AVServicePage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
+          />
+          <Route
+            path="/services/artists"
+            element={
+              <ArtistsServicePage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
+          />
+          <Route
+            path="/services/rentals"
+            element={
+              <RentalsServicePage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
+          />
+          <Route
+            path="/services/birthdays"
+            element={
+              <BirthdayPackagesPage
                 onOpenPlanner={handleOpenPlanner}
               />
             }
           />
           <Route
             path="/birthday-packages"
-            element={<Navigate to="/" replace />}
+            element={<Navigate to="/services/birthdays" replace />}
           />
           <Route
             path="/birthdays"
-            element={<Navigate to="/" replace />}
+            element={<Navigate to="/services/birthdays" replace />}
           />
           <Route
             path="*"

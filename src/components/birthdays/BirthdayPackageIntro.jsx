@@ -4,7 +4,7 @@ import { BIRTHDAY_PACKAGES } from '../../data/birthdayPackagesData';
 
 export default function BirthdayPackageIntro({ activePackageId, onSelectPackage }) {
   return (
-    <section id="packages-section" className="py-16 md:py-24 px-6 md:px-12 bg-[#F5F0E6] text-[#382B25] border-b border-[#382B25]/10">
+    <section id="packages-section" className="pt-6 sm:pt-8 pb-6 sm:pb-8 px-6 md:px-12 bg-[#F5F0E6] text-[#382B25] border-b border-[#382B25]/10">
       <div className="max-w-7xl mx-auto">
         
         {/* Header Block */}

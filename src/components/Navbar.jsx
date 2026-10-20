@@ -12,6 +12,7 @@ export default function Navbar({ onOpenPlanner }) {
 
   const isAboutPage = location.pathname === '/about';
   const isServicesActive = location.pathname.startsWith('/services');
+  const isContactPage = location.pathname === '/contact';
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
 
   const serviceCategories = [
@@ -41,7 +42,7 @@ export default function Navbar({ onOpenPlanner }) {
     { label: 'OUR WORK', path: '/', hash: '#showcase' },
     { label: 'BLOGS', path: '/', hash: '#blogs' },
     { label: 'RENTALS', path: '/', hash: '#rentals' },
-    { label: 'CONTACT', path: '/', hash: '#contact' },
+    { label: 'CONTACT', path: '/contact', hash: '' },
   ];
 
   const handleNavClick = (e, link) => {
@@ -67,8 +68,17 @@ export default function Navbar({ onOpenPlanner }) {
       return;
     }
 
+    if (link.path === '/contact') {
+      if (isContactPage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/contact');
+      }
+      return;
+    }
+
     // Navigating to Home sections
-    if (!isAboutPage && !isServicesPage) {
+    if (!isAboutPage && !isServicesActive && !isContactPage) {
       const element = document.querySelector(link.hash);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
@@ -92,7 +102,7 @@ export default function Navbar({ onOpenPlanner }) {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
             ? 'bg-[#F5F0E6]/95 backdrop-blur-md py-3.5 border-b border-[#382B25]/10 shadow-[0_4px_24px_rgba(56,43,37,0.04)]'
-            : isAboutPage || isServicesActive
+            : isAboutPage || isServicesActive || isContactPage
             ? 'bg-[#F5F0E6]/80 backdrop-blur-sm py-5 md:py-6 border-b border-[#382B25]/10'
             : 'bg-transparent py-6 md:py-8'
         }`}
@@ -102,7 +112,7 @@ export default function Navbar({ onOpenPlanner }) {
           <Link
             to="/"
             onClick={() => {
-              if (!isAboutPage && !isServicesActive) window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (!isAboutPage && !isServicesActive && !isContactPage) window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="flex items-center group text-[#382B25]"
             aria-label="Yellow Springs Home"
@@ -120,10 +130,11 @@ export default function Navbar({ onOpenPlanner }) {
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
               const isDarkBackgroundItem =
-                !isScrolled && !isAboutPage && !isServicesActive && (link.label === 'ABOUT' || link.label === 'SERVICES');
+                !isScrolled && !isAboutPage && !isServicesActive && !isContactPage && (link.label === 'ABOUT' || link.label === 'SERVICES');
               const isActive =
                 (link.path === '/about' && isAboutPage) ||
-                (link.path === '/services' && isServicesActive);
+                (link.path === '/services' && isServicesActive) ||
+                (link.path === '/contact' && isContactPage);
 
               const textColorClass = isDarkBackgroundItem
                 ? 'text-[#F5F0E6] hover:text-[#FFE600] after:bg-[#F5F0E6]'
@@ -261,7 +272,8 @@ export default function Navbar({ onOpenPlanner }) {
               {navLinks.map((link, idx) => {
                 const isActive =
                   (link.path === '/about' && isAboutPage) ||
-                  (link.path === '/services' && isServicesActive);
+                  (link.path === '/services' && isServicesActive) ||
+                  (link.path === '/contact' && isContactPage);
 
                 if (link.label === 'SERVICES') {
                   return (

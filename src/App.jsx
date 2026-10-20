@@ -13,6 +13,7 @@ import CorporateServicePage from './pages/services/CorporateServicePage';
 import AVServicePage from './pages/services/AVServicePage';
 import ArtistsServicePage from './pages/services/ArtistsServicePage';
 import RentalsServicePage from './pages/services/RentalsServicePage';
+import ContactPage from './pages/ContactPage';
 
 export default function App() {
   const [plannerOpen, setPlannerOpen] = useState(false);
@@ -120,6 +121,14 @@ export default function App() {
           <Route
             path="/birthdays"
             element={<Navigate to="/services/birthdays" replace />}
+          />
+          <Route
+            path="/contact"
+            element={
+              <ContactPage
+                onOpenPlanner={handleOpenPlanner}
+              />
+            }
           />
           <Route
             path="*"

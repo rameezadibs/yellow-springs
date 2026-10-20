@@ -19,7 +19,7 @@ export default function Footer({ onOpenPlanner }) {
     { label: 'Our Work', path: '/', hash: '#showcase' },
     { label: 'Blogs', path: '/', hash: '#blogs' },
     { label: 'Rentals', path: '/', hash: '#rentals' },
-    { label: 'Contact', path: '/', hash: '#contact' },
+    { label: 'Contact', path: '/contact', hash: '' },
   ];
 
   const handleLinkClick = (e, link) => {
@@ -38,6 +38,15 @@ export default function Footer({ onOpenPlanner }) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         navigate('/services');
+      }
+      return;
+    }
+
+    if (link.path === '/contact') {
+      if (location.pathname === '/contact') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/contact');
       }
       return;
     }
